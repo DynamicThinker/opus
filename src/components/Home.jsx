@@ -45,22 +45,22 @@ const Home = () => {
 
   return (
     <div className='flex flex-col gap-5 p-6 rounded-lg'>   
-      <div className='flex flex-row gap-5 items-center'>  
+      <div className='flex flex-col md:flex-row gap-5 items-center w-full'>  
         <input 
           type="text" 
           placeholder="Title" 
-          className='bg-black p-3 pl-5 rounded-lg mt-2 w-full text-white focus:outline-none focus:ring-2 focus:ring-emerald-500'
+          className='bg-black p-3 pl-5 rounded-lg mt-2 w-full md:w-auto text-white focus:outline-none focus:ring-2 focus:ring-emerald-500'
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
 
         <button
           onClick={createPaste}
-          className='p-3 rounded-2xl mt-2 gradient-text-btn text-black font-bold hover:gradient-text-btn'>      
+          className='p-3 rounded-2xl mt-2 gradient-text-btn text-black font-bold hover:gradient-text-btn w-full md:w-auto'>      
           {pasteId ? "Update" : "Create"}
         </button>
       </div>
-      <div className='flex flex-col gap-2 min-w-[800px]'>
+      <div className='flex flex-col gap-2 w-full'>
         <textarea
           placeholder="Your paste goes here..."
           className='bg-black p-4 rounded-lg mt-4 text-white w-full h-64 focus:outline-none focus:ring-2 focus:ring-emerald-500'
