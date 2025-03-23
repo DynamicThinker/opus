@@ -32,7 +32,6 @@ export const pasteSlice = createSlice({
       if (index !== -1) {
         state.pastes[index] = action.payload
         localStorage.setItem("pastes", JSON.stringify(state.pastes))
-        toast.success("Paste updated successfully")
       } else {
         toast.error("Paste not found")
       }

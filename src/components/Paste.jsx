@@ -123,7 +123,7 @@ const Paste = () => {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="View Paste"
-        className="bg-black p-6 rounded-2xl min-w-[300px] sm:min-w-[400px] min-h-[300px] shadow-lg"
+        className="bg-black p-6 rounded-2xl min-w-[300px] sm:min-w-[350px] min-h-[300px] shadow-lg"
         overlayClassName="bg-opacity-80 fixed inset-0 flex justify-center items-center backdrop-blur-md"
       >
         {selectedPaste && (
@@ -141,7 +141,7 @@ const Paste = () => {
                 Copy
               </button>
               <button
-                className="bg-red-600 p-2 rounded-md text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="bg-red-600 p-2 rounded-md text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 onClick={closeModal}
               >
                 Close
