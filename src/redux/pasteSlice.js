@@ -25,6 +25,7 @@ export const pasteSlice = createSlice({
           state.pastes.push(paste)
           localStorage.setItem("pastes", JSON.stringify(state.pastes))
         }
+        toast.success("Paste created successfully")
       }
     },
     updateToPastes: (state, action) => {

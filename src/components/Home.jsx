@@ -35,7 +35,6 @@ const Home = () => {
       toast.success("Paste updated successfully");
     } else {
       dispatch(addToPastes(paste));
-      toast.success("Paste created successfully");
     }
 
     setTitle('');
