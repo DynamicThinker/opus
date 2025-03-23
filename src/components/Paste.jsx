@@ -62,7 +62,7 @@ const Paste = () => {
   }
 
   return (
-    <div className="bg-[#222629] min-h-screen py-8 px-8 pt-40 hide-scrollbar">
+    <div className="bg-[#222629] min-h-screen py-8 px-8 pt-30 hide-scrollbar">
       <div className="max-w-3xl mx-auto mb-5">
         <input
           type="text"
