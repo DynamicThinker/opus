@@ -7,34 +7,26 @@ import Paste from './components/Paste'
 const router = createBrowserRouter(
   [
     {
-      path:"/",
-      element:
-      <div className="flex flex-col h-full max-w-full overflow-x-hidden"> 
-        <Navbar />
-        <div className="flex-grow overflow-y-auto"> 
-          <Home />
+      path: "/",
+      element: (
+        <div className="flex flex-col h-full max-w-full overflow-x-hidden">
+          <Navbar />
+          <div className="flex-grow overflow-y-auto">
+            <Home />
+          </div>
         </div>
-      </div>
+      ),
     },
     {
-      path:"/pastes",
-      element:
-      <div className="flex flex-col h-full max-w-full overflow-x-hidden">
-        <Navbar />
-        <div className="flex-grow overflow-y-auto"> 
-          <Paste />
+      path: "/pastes",
+      element: (
+        <div className="flex flex-col h-full max-w-full overflow-x-hidden">
+          <Navbar />
+          <div className="flex-grow overflow-y-auto">
+            <Paste />
+          </div>
         </div>
-      </div>
-    },
-    {
-      path:"/pastes/:id",
-      element:
-      <div className="flex flex-col h-full max-w-full overflow-x-hidden"> 
-        <Navbar />
-        <div className="flex-grow overflow-y-auto"> 
-          <ViewPaste />
-        </div>
-      </div>
+      ),
     },
   ]
 )
@@ -42,7 +34,7 @@ const router = createBrowserRouter(
 function App() {
   return (
     <div className='flex flex-col items-center justify-center h-screen bg-[#222629] text-white font-mono'>
-      <div className="w-full flex flex-col h-full max-w-full overflow-x-hidden"> 
+      <div className="w-full flex flex-col h-full max-w-full overflow-x-hidden">
         <RouterProvider router={router} />
       </div>
     </div>

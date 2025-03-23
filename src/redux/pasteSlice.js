@@ -24,7 +24,7 @@ export const pasteSlice = createSlice({
         } else {
           state.pastes.push(paste)
           localStorage.setItem("pastes", JSON.stringify(state.pastes))
-          toast.success("Paste created successfully")
+          toast.success("Paste added successfully")
         }
       }
     },

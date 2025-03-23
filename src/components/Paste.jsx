@@ -1,76 +1,157 @@
-import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom';
-import { addToPastes, updateToPastes } from '../redux/pasteSlice';
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeFromPastes } from '../redux/pasteSlice'
 import { toast } from 'react-hot-toast'
+import Modal from 'react-modal'
 
-const Home = () => {
-  const [title, setTitle] = useState('');
-  const [value, setValue] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams(); 
-  const pasteId = searchParams.get("pasteId");
-  const dispatch = useDispatch();
-  const allPastes = useSelector(state => state.paste.pastes);
+const Paste = () => {
+  console.log("Paste component rendered");
 
-  useEffect(() => {
-    if(pasteId) {
-      const paste = allPastes.find(paste => paste._id === pasteId);
-      if(paste) {
-        setTitle(paste.title);
-        setValue(paste.content);
-      }
-    } 
-  }, [pasteId, allPastes])
+  const pastes = useSelector(state => state.paste.pastes)
+  const dispatch = useDispatch()
+  const [searchTerm, setSearchTerm] = useState("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedPaste, setSelectedPaste] = useState(null)
 
-  function createPaste() {
-    const paste = {
-      title: title,
-      content: value,
-      _id: pasteId || Date.now().toString(36),
-      createdAt: new Date().toISOString(),
-    }
+  const filteredData = pastes.filter((paste) =>
+    paste.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 
-    if(pasteId) {
-      dispatch(updateToPastes(paste));
-      toast.success("Paste updated successfully");
-    } else {
-      dispatch(addToPastes(paste));
-      toast.success("Paste created successfully");
-    }
+  function handleDelete(pasteId) {
+    console.log("handleDelete called");
+    dispatch(removeFromPastes({ id: pasteId }))
+    toast.success("Paste deleted successfully")
+  }
 
-    setTitle('');
-    setValue('');
-    setSearchParams({});
+  function handleCopy(content) {
+    console.log("handleCopy called");
+    navigator.clipboard.writeText(content)
+      .then(() => {
+        toast.success("Copied to clipboard")
+      })
+      .catch(() => {
+        toast.error("Failed to copy")
+      })
+  }
+
+  function handleShare(paste) {
+    console.log("handleShare called");
+    const toastId = toast.loading("Sharing...")
+    navigator.share({
+      title: paste.title,
+      text: paste.content,
+    })
+      .then(() => {
+        toast.dismiss(toastId)
+        toast.success("Shared successfully")
+      })
+      .catch(() => {
+        toast.dismiss(toastId)
+        toast.error("Failed to share")
+      })
+  }
+
+  function openModal(paste) {
+    setSelectedPaste(paste)
+    setIsModalOpen(true)
+  }
+
+  function closeModal() {
+    setIsModalOpen(false)
+    setSelectedPaste(null)
   }
 
   return (
-    <div className='flex flex-col gap-5 p-6 rounded-lg max-w-full overflow-x-hidden'>   
-      <div className='flex flex-col md:flex-row gap-5 items-center w-full'>  
-        <input 
-          type="text" 
-          placeholder="Title" 
-          className='bg-black p-3 pl-5 rounded-lg mt-2 w-full md:w-auto text-white focus:outline-none focus:ring-2 focus:ring-emerald-500'
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+    <div className="bg-[#222629] min-h-screen py-8 px-4">
+      <div className="max-w-3xl mx-auto">
+        <input
+          type="text"
+          placeholder="Search pastes"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="bg-black p-3 pl-5 rounded-lg mt-2 w-full text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
         />
 
-        <button
-          onClick={createPaste}
-          className='p-3 rounded-2xl mt-2 gradient-text-btn text-black font-bold hover:gradient-text-btn w-full md:w-auto'>      
-          {pasteId ? "Update" : "Create"}
-        </button>
+        <div>
+          {filteredData.length > 0 ? (
+            filteredData.map((paste) => (
+              <div
+                key={paste._id} 
+                className="bg-gray-800 rounded-lg p-4 mb-4 shadow-md"
+              >
+                <div className="text-white font-bold mb-2">{paste.title}</div>
+                <div className="text-gray-300 mb-3">{paste.content}</div>
+                <div className="text-gray-500 mb-3">Created at: {new Date(paste.createdAt).toLocaleString()}</div>
+                <div className="flex flex-wrap gap-2">
+                  <button className="bg-emerald-600 p-2 rounded-md text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <a href={`/?pasteId=${paste?._id}`}>Edit</a>
+                  </button>
+                  <button
+                    className="bg-red-600 p-2 rounded-md text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    onClick={() => handleDelete(paste._id)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="bg-blue-600 p-2 rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onClick={() => openModal(paste)}
+                  >
+                    View
+                  </button>
+                  <button
+                    className="bg-yellow-600 p-2 rounded-md text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    onClick={() => handleCopy(paste.content)}
+                  >
+                    Copy
+                  </button>
+                  <button
+                    className="bg-white p-2 rounded-md text-black hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    onClick={() => handleShare(paste)}
+                  >
+                    Share
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-gray-500 mt-4">No pastes found matching your search.</div>
+          )}
+        </div>
       </div>
-      <div className='flex flex-col gap-2 w-full'>
-        <textarea
-          placeholder="Your paste goes here..."
-          className='bg-black p-4 rounded-lg mt-4 text-white w-full h-64 focus:outline-none focus:ring-2 focus:ring-emerald-500'
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          rows={20}
-        />
-      </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="View Paste"
+        className="bg-black p-6 rounded-2xl min-w-[300px] sm:min-w-[400px] min-h-[300px] shadow-lg"
+        overlayClassName="bg-opacity-80 fixed inset-0 flex justify-center items-center backdrop-blur-md"
+      >
+        {selectedPaste && (
+          <div>
+            <div>
+              <h2 className="text-white text-2xl font-bold mb-4">{selectedPaste.title}</h2>
+              <p className="text-gray-300 mb-4">{selectedPaste.content}</p>
+              <p className="text-gray-500">Created at: {new Date(selectedPaste.createdAt).toLocaleString()}</p>
+            </div>
+            <div className="flex gap-2 mt-4">
+              <button
+                className="bg-white p-2 rounded-md text-black hover:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                onClick={() => handleCopy(selectedPaste.content)}
+              >
+                Copy
+              </button>
+              <button
+                className="bg-red-600 p-2 rounded-md text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                onClick={closeModal}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   )
 }
 
-export default Home
+export default Paste
