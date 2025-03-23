@@ -29,19 +29,24 @@ export const pasteSlice = createSlice({
       }
     },
     updateToPastes: (state, action) => {
-      const index = state.pastes.findIndex(paste => paste.id === action.payload.id)
+      const index = state.pastes.findIndex(paste => paste._id === action.payload._id)
       if (index !== -1) {
         state.pastes[index] = action.payload
         localStorage.setItem("pastes", JSON.stringify(state.pastes))
+        toast.success("Paste updated successfully")
+      } else {
+        toast.error("Paste not found")
       }
     },
     resetAllPastes: (state) => {
       state.pastes = []
       localStorage.removeItem("pastes")
+      toast.success("All pastes have been reset")
     },
     removeFromPastes: (state, action) => {
       state.pastes = state.pastes.filter(paste => paste._id !== action.payload.id)
       localStorage.setItem("pastes", JSON.stringify(state.pastes))
+      toast.success("Paste removed successfully")
     }
   },
 })
