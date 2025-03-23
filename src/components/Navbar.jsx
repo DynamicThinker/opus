@@ -10,7 +10,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className='bg-black p-4 shadow-lg w-full rounded-lg m-2'>
+    <nav className='bg-black p-4 shadow-lg w-auto rounded-lg m-4 fixed top-0 left-0 right-0 z-50 mx-4'>
       <div className='flex justify-between items-center px-4'>
         <span className='font-bold font-sans text-2xl gradient-text'>OPUS</span>
         
