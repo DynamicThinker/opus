@@ -44,7 +44,7 @@ const Home = () => {
   }
 
   return (
-    <div className='flex flex-col gap-5 p-6 rounded-lg max-w-full overflow-x-hidden pt-20'>   
+    <div className='flex flex-col gap-5 p-6 rounded-lg max-w-full overflow-x-hidden pt-40'>   
       <div className='flex flex-col md:flex-row gap-5 items-center w-full'>  
         <input 
           type="text" 
