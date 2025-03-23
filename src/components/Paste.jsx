@@ -3,6 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { removeFromPastes } from '../redux/pasteSlice'
 import { toast } from 'react-hot-toast'
 import Modal from 'react-modal'
+import { IoCopy } from "react-icons/io5";
+import { FaShare } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 
 const Paste = () => {
   console.log("Paste component rendered");
@@ -82,33 +87,33 @@ const Paste = () => {
                 <div className="text-white font-bold mb-2">{paste.title}</div>
                 <div className="text-gray-300 mb-3">{paste.content}</div>
                 <div className="text-gray-500 mb-3">Created at: {new Date(paste.createdAt).toLocaleString()}</div>
-                <div className="flex flex-wrap gap-2">
-                  <button className="bg-emerald-500 p-2 rounded-md text-white hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    <a href={`/?pasteId=${paste?._id}`}>Edit</a>
+                <div className="flex flex-wrap gap-5">
+                  <button className="p-3 text-emerald-400 scale-140 rounded-md hover: transform hover:scale-170">
+                    <a href={`/?pasteId=${paste?._id}`}><FaEdit /></a>
                   </button>
                   <button
-                    className="bg-red-600 p-2 rounded-md text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="p-3 text-red-500 scale-140 rounded-md hover: transform hover:scale-170"
                     onClick={() => handleDelete(paste._id)}
                   >
-                    Delete
+                    <MdDelete />
                   </button>
                   <button
-                    className="bg-blue-600 p-2 rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="p-3 text-yellow-300 scale-140 rounded-md hover: transform hover:scale-160"
                     onClick={() => openModal(paste)}
                   >
-                    View
+                    <FaEye />
                   </button>
                   <button
-                    className="bg-yellow-500 p-2 rounded-md text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    className="p-3 scale-130 rounded-md hover: transform hover:scale-160 "
                     onClick={() => handleCopy(paste.content)}
                   >
-                    Copy
+                    <IoCopy />
                   </button>
                   <button
-                    className="bg-white p-2 rounded-md text-black hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    className="p-2 scale-130 rounded-md text-cyan-400 hover:scale-160 focus:outline-none"
                     onClick={() => handleShare(paste)}
                   >
-                    Share
+                    <FaShare />
                   </button>
                 </div>
               </div>
