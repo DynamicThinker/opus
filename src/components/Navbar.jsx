@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <nav className='bg-black p-4 shadow-lg w-auto rounded-lg mt-2 fixed top-0 left-0 right-0 z-50 mx-4'>
       <div className='flex justify-between items-center px-4'>
-        <span className='font-bold font-sans text-2xl gradient-text'>OPUS</span>
+        <span className='font-bold font-sans text-3xl gradient-text'>OPUS</span>
         
         <div className='hidden md:flex flex-row gap-8'>
           <NavLink
