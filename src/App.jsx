@@ -33,7 +33,7 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <div className='flex flex-col items-center justify-center h-screen bg-[#222629] text-white font-mono'>
+    <div className='flex flex-col items-center justify-center h-screen bg-[#222923] text-white font-mono'>
       <div className="w-full flex flex-col h-full max-w-full overflow-x-hidden">
         <RouterProvider router={router} />
       </div>
