@@ -84,7 +84,7 @@ const Paste = () => {
                 key={paste._id} 
                 className="bg-black rounded-lg p-4 mb-4 shadow-lg"
               >
-                <div className="text-white font-bold mb-2">{paste.title}</div>
+                <div className="text-white text-2xl font-bold mb-2">{paste.title}</div>
                 <div className="text-gray-300 mb-3">{paste.content}</div>
                 <div className="text-gray-500 mb-3">Created at: {new Date(paste.createdAt).toLocaleString()}</div>
                 <div className="flex flex-wrap gap-5">
@@ -128,13 +128,13 @@ const Paste = () => {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="View Paste"
-        className="bg-black p-6 rounded-2xl min-w-[300px] sm:min-w-[380px] min-h-[310px] shadow-lg"
+        className="bg-black p-6 rounded-2xl min-w-[300px] sm:min-w-[380px] min-h-[310px] shadow-lg border-white border-2"
         overlayClassName="bg-opacity-80 fixed inset-0 flex justify-center items-center backdrop-blur-md"
       >
         {selectedPaste && (
           <div className='flex flex-col gap-12'>
             <div>
-              <h2 className="text-white text-2xl font-bold mb-4 ">{selectedPaste.title}</h2>
+              <h2 className="text-white underline decoration-cyan-400 text-3xl font-bold mb-4 ">{selectedPaste.title}</h2>
               <p className="text-gray-300 mb-4">{selectedPaste.content}</p>
               <p className="text-gray-500">Created at: {new Date(selectedPaste.createdAt).toLocaleString()}</p>
             </div>
