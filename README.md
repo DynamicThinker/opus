@@ -1,1 +1,2 @@
-
+THIS A NOTES APP CONVERTED TO A PASTE KEEPING APP. USERS CAN EASILY PASTE THE CONTENT NEEDED BY THEM AT A LATER TIME AND CAN ACCESS IT FROM THE ITSELF.
+Made By utilising the properties of Redux for saving data as Slices on the local machine.
